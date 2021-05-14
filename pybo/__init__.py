@@ -8,25 +8,23 @@ import config
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app():
-    app = Flask(__name__)
 
-    #sqlalcehmy db설정
-    app.config.from_object(config)
-    db.init_app(app)
-    migrate.init_app(app,db)
+app = Flask(__name__)
 
-    from . import models
+#sqlalcehmy db설정
+app.config.from_object(config)
+db.init_app(app)
+migrate.init_app(app,db)
 
-    from .views import main_views,naver_views,question_views,answer_views,auth_views,movie_views,Navermovie_views
-    app.register_blueprint(main_views.bp)
-    app.register_blueprint(naver_views.bp)
-    app.register_blueprint(question_views.bp)
-    app.register_blueprint(answer_views.bp)
-    app.register_blueprint(auth_views.bp)
-    app.register_blueprint(movie_views.bp)
-    app.register_blueprint(Navermovie_views.bp)
-    from .filter import format_datetime
-    app.jinja_env.filters['datetime'] = format_datetime
+from . import models
 
-    return app
+from .views import main_views,naver_views,question_views,answer_views,auth_views,movie_views,Navermovie_views
+app.register_blueprint(main_views.bp)
+app.register_blueprint(naver_views.bp)
+app.register_blueprint(question_views.bp)
+app.register_blueprint(answer_views.bp)
+app.register_blueprint(auth_views.bp)
+app.register_blueprint(movie_views.bp)
+app.register_blueprint(Navermovie_views.bp)
+from .filter import format_datetime
+app.jinja_env.filters['datetime'] = format_datetime
